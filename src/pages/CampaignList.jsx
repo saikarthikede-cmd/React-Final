@@ -22,8 +22,10 @@ function CampaignList() {
   }, [user]);
 
   const handleDelete = (id) => {
-    deleteCampaign(id);
-    showToast("Campaign deleted");
+    if (window.confirm("Are you sure you want to delete this campaign?")) {
+      deleteCampaign(id);
+      showToast("Campaign deleted");
+    }
   };
 
   return (
