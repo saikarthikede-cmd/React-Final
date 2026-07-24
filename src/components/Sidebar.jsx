@@ -4,8 +4,6 @@ import { useAuth } from "../context/AuthContext";
 
 function Sidebar() {
   const { user } = useAuth();
-
-  // role check used to decide if the Create Campaign link is shown
   const canManageCampaigns = useCallback(() => {
     return user.role === "Admin" || user.role === "Super Admin";
   }, [user]);

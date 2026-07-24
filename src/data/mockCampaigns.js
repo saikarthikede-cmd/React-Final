@@ -1,4 +1,3 @@
-// list of banner pictures the user can pick from when creating a campaign
 export const bannerOptions = [
   "/banners/banner1.svg",
   "/banners/banner2.svg",
@@ -12,7 +11,6 @@ export const platformOptions = ["Google Search", "Facebook", "Instagram"];
 
 export const ageGroupOptions = ["18-24", "25-34", "35+"];
 
-// starting campaigns shown when the app has no saved data yet
 export const defaultCampaigns = [
   {
     id: 1,

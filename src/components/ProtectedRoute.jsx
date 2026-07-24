@@ -1,8 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-// wraps a page and only lets it through if the user is logged in
-// and (optionally) has one of the allowed roles
 function ProtectedRoute({ children, allowedRoles }) {
   const { user } = useAuth();
 
