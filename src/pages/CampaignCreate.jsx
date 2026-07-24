@@ -27,6 +27,10 @@ function CampaignCreate() {
       setError("Budget must be greater than ₹0");
       return;
     }
+    if (Number(budget) > 9999999) {
+      setError("Budget cannot be more than ₹9999999");
+      return;
+    }
     if (!banner) {
       setError("Please select a banner picture");
       return;
@@ -92,6 +96,7 @@ function CampaignCreate() {
           <input
             type="number"
             min="1"
+            max="9999999"
             value={budget}
             onChange={(e) => setBudget(e.target.value)}
             className="w-full border border-gray-300 rounded px-3 py-2"
