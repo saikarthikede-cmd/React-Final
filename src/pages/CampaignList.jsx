@@ -2,10 +2,12 @@ import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useCampaigns } from "../context/CampaignContext";
+import { useToast } from "../context/ToastContext";
 
 function CampaignList() {
   const { user } = useAuth();
   const { campaigns, toggleStatus, deleteCampaign, resetCampaigns } = useCampaigns();
+  const { showToast } = useToast();
 
   const canToggleStatus = useCallback(() => {
     return user.role === "Admin" || user.role === "Super Admin";
@@ -18,6 +20,11 @@ function CampaignList() {
   const canCreate = useCallback(() => {
     return user.role === "Admin" || user.role === "Super Admin";
   }, [user]);
+
+  const handleDelete = (id) => {
+    deleteCampaign(id);
+    showToast("Campaign deleted");
+  };
 
   return (
     <div className="p-4 max-w-5xl mx-auto">
@@ -57,7 +64,7 @@ function CampaignList() {
               <th className="p-3">Platform</th>
               <th className="p-3">Audience</th>
               <th className="p-3">Budget</th>
-              <th className="p-3">Actions</th>
+              {canToggleStatus() && <th className="p-3">Actions</th>}
             </tr>
           </thead>
           <tbody>
@@ -92,26 +99,26 @@ function CampaignList() {
                 <td className="p-3">{campaign.platform}</td>
                 <td className="p-3">{campaign.audience}</td>
                 <td className="p-3">₹{campaign.budget}</td>
-                <td className="p-3">
-                  <div className="flex gap-2">
-                    {canToggleStatus() && (
+                {canToggleStatus() && (
+                  <td className="p-3">
+                    <div className="flex gap-2">
                       <button
                         onClick={() => toggleStatus(campaign.id)}
                         className="bg-blue-100 hover:bg-blue-200 text-blue-700 px-2 py-1 rounded text-xs"
                       >
                         {campaign.status === "Active" ? "Pause" : "Resume"}
                       </button>
-                    )}
-                    {canDelete() && (
-                      <button
-                        onClick={() => deleteCampaign(campaign.id)}
-                        className="bg-red-100 hover:bg-red-200 text-red-700 px-2 py-1 rounded text-xs"
-                      >
-                        Delete
-                      </button>
-                    )}
-                  </div>
-                </td>
+                      {canDelete() && (
+                        <button
+                          onClick={() => handleDelete(campaign.id)}
+                          className="bg-red-100 hover:bg-red-200 text-red-700 px-2 py-1 rounded text-xs"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

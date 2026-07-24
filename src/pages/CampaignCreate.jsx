@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCampaigns } from "../context/CampaignContext";
+import { useToast } from "../context/ToastContext";
 import { bannerOptions, platformOptions, ageGroupOptions } from "../data/mockCampaigns";
 
 function CampaignCreate() {
   const { addCampaign } = useCampaigns();
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -22,7 +24,7 @@ function CampaignCreate() {
       return;
     }
     if (!budget || Number(budget) <= 0) {
-      setError("Budget must be greater than $0");
+      setError("Budget must be greater than ₹0");
       return;
     }
     if (!banner) {
@@ -38,6 +40,7 @@ function CampaignCreate() {
       banner,
     });
 
+    showToast("Campaign created successfully");
     navigate("/campaigns");
   };
 

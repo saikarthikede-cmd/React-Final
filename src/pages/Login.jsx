@@ -1,18 +1,21 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { useToast } from "../context/ToastContext";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { login } = useAuth();
+  const { showToast } = useToast();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const result = login(username, password);
     if (result.success) {
+      showToast("Logged in successfully");
       navigate("/dashboard");
     } else {
       setError(result.message);

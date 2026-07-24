@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import { CampaignProvider } from "./context/CampaignContext";
+import { ToastProvider } from "./context/ToastContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
@@ -73,9 +74,11 @@ function App() {
   return (
     <AuthProvider>
       <CampaignProvider>
-        <BrowserRouter>
-          <AppLayout />
-        </BrowserRouter>
+        <ToastProvider>
+          <BrowserRouter>
+            <AppLayout />
+          </BrowserRouter>
+        </ToastProvider>
       </CampaignProvider>
     </AuthProvider>
   );

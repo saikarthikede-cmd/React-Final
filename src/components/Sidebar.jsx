@@ -1,6 +1,11 @@
 import { useCallback } from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+
+const linkClass = ({ isActive }) =>
+  isActive
+    ? "bg-blue-700 text-white px-3 py-2 rounded whitespace-nowrap"
+    : "text-gray-700 hover:bg-blue-50 hover:text-blue-700 px-3 py-2 rounded whitespace-nowrap";
 
 function Sidebar() {
   const { user } = useAuth();
@@ -10,25 +15,16 @@ function Sidebar() {
 
   return (
     <aside className="bg-white shadow flex flex-row md:flex-col gap-1 p-2 md:w-48 md:min-h-[calc(100vh-56px)] overflow-x-auto">
-      <Link
-        to="/dashboard"
-        className="text-gray-700 hover:bg-blue-50 hover:text-blue-700 px-3 py-2 rounded whitespace-nowrap"
-      >
+      <NavLink to="/dashboard" className={linkClass}>
         Dashboard
-      </Link>
-      <Link
-        to="/campaigns"
-        className="text-gray-700 hover:bg-blue-50 hover:text-blue-700 px-3 py-2 rounded whitespace-nowrap"
-      >
+      </NavLink>
+      <NavLink to="/campaigns" end className={linkClass}>
         Campaigns
-      </Link>
+      </NavLink>
       {canManageCampaigns() && (
-        <Link
-          to="/campaigns/new"
-          className="text-gray-700 hover:bg-blue-50 hover:text-blue-700 px-3 py-2 rounded whitespace-nowrap"
-        >
+        <NavLink to="/campaigns/new" className={linkClass}>
           Create Campaign
-        </Link>
+        </NavLink>
       )}
     </aside>
   );
